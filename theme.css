@@ -16,7 +16,7 @@
 }
 
 
-:light-theme {
+.light-theme {
     --text-color: #000; 
     --background-color: #fff; 
     --anchor-color: #4F3674; 
@@ -36,7 +36,7 @@
     --input-border-color: #ccc; 
 }
 
-/* body .dark-theme {
+.dark-theme {
     --text-color: #fafafa; 
     --background-color: #303030;
     --anchor-color: #fff; 
@@ -54,7 +54,7 @@
     --btn-hover-background-color: #7d4787; 
     --btn-hover-color: #fff; 
     --input-border-color: #303030; 
-} */
+}
 
 body {
     color: var(--text-color); 
@@ -72,7 +72,7 @@ a:hover {
 }
 
 h1 {
-    color: var(--header-color); 
+    color: var(--heading-color); 
     background-color: var(--h1-background-color); 
     padding: 10px; 
     border: solid 1px var(--h1-border-color)
