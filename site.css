@@ -1,0 +1,33 @@
+.app-header {
+    text-align: center;
+    font-weight: 400;
+    border: none;
+    color: inherit;
+    background-color: inherit;
+}
+.form {
+    display: inline-grid;
+    grid-template-columns: auto;
+}
+
+.form-field {
+    padding: 20px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.return-home { 
+    color: #4F3674;
+    text-decoration: none;
+}
+
+.return-home:hover {
+    background-color: #D6A800;
+    color: #4F3674;
+}
+
+.return-home:visited {
+    color: #3C275A;
+}
