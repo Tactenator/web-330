@@ -1,7 +1,17 @@
+/*
+    ==================
+    Title: theme.js, 
+    Author: Trevor McLaurine
+    Date: 3/14/2023
+    Description: Code that changes the theme for the landing page
+*/
+
 window.addEventListener("DOMContentLoaded", () => { 
 
+    // Grabs the icon in the top right corner
     const icon = document.getElementById('icon-mode');
 
+    // Sets the default theme based on user preferences from past visits. 
     const setDefaultTheme = () => {
         const theme = localStorage.getItem('mode') || "light-theme"; 
         const iconMode = localStorage.getItem('iconMode') || "fa-toggle-off"; 
@@ -9,13 +19,15 @@ window.addEventListener("DOMContentLoaded", () => {
 
         document.body.classList.value = theme; 
         document.getElementById('icon-mode').classList.add(iconMode); 
-        document.getElementById('icon-text').innerHTML = iconText; 
+        document.getElementById('icon-text').innerHTML = iconText;
     }
 
-    const setSelectedTheme = () => {
-        document.body.classList.value = localStorage.getItem('mode') || "light-theme";
+    const setSelectedTheme = () =>
+    {
+        document.body.classList.value = localStorage.getItem("mode") || "light-theme";
     }
 
+    // Toggles the mode between light and dark. 
     const toggleMode = (e) => {
         let colorTheme = document.body.classList; 
         
