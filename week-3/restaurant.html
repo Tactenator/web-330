@@ -118,6 +118,7 @@
         const bill = new Bill()
 
         function addItems() {
+            bill.clearArray()
 
             for(let beverage of beverages) {
                 if(beverage.checked) {
