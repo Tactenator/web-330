@@ -22,6 +22,24 @@ export class Bill {
         this._desserts.push(desserts)
     }
 
+    clearArray() {
+        this._appetizers.forEach((item) => {
+            this._appetizers.shift(item)
+        })
+
+        this._beverages.forEach((item) => {
+            this._beverages.shift(item)
+        })
+
+        this._mainCourses.forEach((item) => {
+            this._mainCourses.shift(item)
+        })
+
+        this._appetizers.forEach((item) => {
+            this._appetizers.shift(item)
+        })
+    }
+
     getTotal() {
         let total = 0; 
 
