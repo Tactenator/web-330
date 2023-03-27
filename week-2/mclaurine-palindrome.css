@@ -1,0 +1,27 @@
+/**
+    Title: mclaurine-palindrome.css, 
+    Author: Trevor McLaurine
+    Date: 3/22/2023
+    Description: Styling for Palindrome Application
+**/
+
+body {
+    display: flex; 
+    justify-content: center;
+}
+
+#container {
+    width: 600px; 
+    margin:0 auto; 
+}
+
+.app-header {
+    text-align: center;
+    font-weight: 400; 
+}
+
+#assign-results {
+    text-align: center;
+    font-size: 28px;
+    margin-top: 5%;
+}
