@@ -1,4 +1,5 @@
 export class Bill { 
+    //initializes class and constructor
     constructor(_beverages, _appetizers, _mainCourses, _desserts) {
         this._beverages = []
         this._appetizers = []
@@ -6,6 +7,7 @@ export class Bill {
         this._desserts = []
     }
 
+    //pushes item choice to the constructor array
     addBeverage(beverage) {
         this._beverages.push(beverage)
     }
@@ -22,6 +24,7 @@ export class Bill {
         this._desserts.push(desserts)
     }
 
+    //clears the array in the constructor. This prevents incorrect totals if user decides to add or remove items.
     clearArray() {
         this._appetizers.forEach((item) => {
             this._appetizers.shift(item)
@@ -40,6 +43,7 @@ export class Bill {
         })
     }
 
+    //gets the total of all the users choices
     getTotal() {
         let total = 0; 
 

@@ -1,0 +1,16 @@
+/**
+    Title: mclaurine-restaurant.css, 
+    Author: Trevor McLaurine
+    Date: 3/29/2023
+    Description: Styling for Restaurant Application
+**/
+
+#menu-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+#menu-container .card {
+    width: 100%; 
+}
