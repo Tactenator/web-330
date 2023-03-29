@@ -4,6 +4,10 @@
     Date: 3/29/2023
     Description: Styling for Restaurant Application
 **/
+body {
+    display: flex; 
+    justify-content: center;
+}
 
 #menu-container {
     display: grid;
