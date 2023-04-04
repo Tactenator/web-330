@@ -1,3 +1,16 @@
+/**
+    Title: mclaurine-restaurant.css, 
+    Author: Trevor McLaurine
+    Date: 4/4/2023
+    Description: Styling for Calorie Converter
+**/
+
+body {
+    display: flex; 
+    justify-content: center;
+}
+
+
 #foodList {
     float: right; 
     color: #df546a; 

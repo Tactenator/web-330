@@ -163,15 +163,16 @@ table {
     margin-bottom: 30px; 
 }
 
-.table th {
+tr th {
     padding: 12px 0; 
-    text-align: left;
-    background: var(--table-headerbackground-color);
+    text-align: center;
+    background: var(--table-header-background);
     color: var(--table-header-color);  
 }
 
-.table td, th {
-    border: 1px solid var(--table-border-color)
+table td, th {
+    border: 1px solid var(--table-border-color);
+    text-align: center;
 }
 
 .table-hover, tr:hover {

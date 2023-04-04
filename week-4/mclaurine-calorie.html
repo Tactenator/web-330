@@ -1,8 +1,8 @@
 <!--
-    Title: mclaurine-palindrome.html, 
+    Title: mclaurine-calorie.html, 
     Author: Trevor McLaurine
-    Date: 3/22/2023
-    Description: Palindrome Application
+    Date: 4/4/2023
+    Description: Calorie Converter Application
 -->
 
 <!DOCTYPE html>
@@ -55,43 +55,62 @@
     import { CalorieConverter } from './calorie-converter.js'; 
 
     const txtFoodEl = document.getElementById('txtFoodItem'); 
-    const txtFoodItem = txtFoodEl.value;
+    let txtFoodItem = txtFoodEl.value;
     const searchResults = document.getElementById('searchResults')
-    const foodList = CalorieConverter.data; 
+    const converter = new CalorieConverter();
+    const searchInput = document.querySelector('input')
     let foodListData = '(Ex: '; 
 
     const addFoodData = () => {
-        for(item of foodList) {
-        foodListData += foodList.name; 
+        const foodList = converter.data; 
+        for(let item of foodList) {
+            let formatItem = item.name; 
+            formatItem = formatItem.charAt(0).toUpperCase() + item.name.slice(1)
+            foodListData += formatItem + ', '
         }
-        foodListData += ')'
+        foodListData = foodListData.slice(0, foodListData.length - 2) + ')';
         document.getElementById('foodList').innerHTML = foodListData; 
+     }
+
+    const addTableData = (name, calories) => {
+        const tableRow = document.createElement('tr')
+        let data = [name, calories]
+
+        for(let item of data){
+            let newData = document.createElement('td');
+            newData.innerHTML = item
+            tableRow.appendChild(newData)
+        }
+        
+        searchResults.appendChild(tableRow)
+
     }
 
+    const updateSearch = (e) => {
+        txtFoodItem = e.target.value; 
+    }
+
+    searchInput.addEventListener('input', (e) => {
+        updateSearch(e)
+    }) 
 
     document.getElementById('btnSearch').addEventListener('click', () => {
         //do search things
-        let foods = CalorieConverter.find(txtFoodItem.toLowerCase())
-        let tableData = ``;
-
-        for(item of foods) {
-            tableData += 
-            `
-                <tr>
-                    <td>${item.name}</td>
-                    <td>${item.calories}</td>
-                </tr>
-            `
+        let foods = converter.find(txtFoodItem.toLowerCase())
+        if(!foods){
+            alert(`${txtFoodItem} is not in this data set. Try again.`)
+            return
         }
-
-        searchResults.appendChild(tableData)
+        addTableData(foods.name, foods.calories)
+        
     })
 
-    document.addEventListener('keyup', () => {
-        if(event.keycode === 13){
+    searchInput.addEventListener("keyup", (e) => {
+        if(e.keyCode === 13){
             document.getElementById('btnSearch').click(); 
         }
     })
 
+    addFoodData()
 </script>
 </html>
