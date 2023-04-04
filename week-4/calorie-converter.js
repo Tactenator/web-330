@@ -12,6 +12,7 @@ export class CalorieConverter {
     ]
 
     find(e) {
+        console.log(data)
         return data.find(item => item.name === e)
     }
         
