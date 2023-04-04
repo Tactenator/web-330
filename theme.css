@@ -41,6 +41,11 @@
     --btn-hover-background-color: #d6a800; 
     --btn-hover-color: #4f3674; 
     --input-border-color: #ccc; 
+    --table-header-background: #4f3674; 
+    --table-header-color: #fff; 
+    --table-border-color: #ddd; 
+    --table-hover-background-color: #d6a800; 
+    --table-hover-color: #4f3674;
 }
 
 .dark-theme {
@@ -61,6 +66,11 @@
     --btn-hover-background-color: #7d4787; 
     --btn-hover-color: #fff; 
     --input-border-color: #303030; 
+    --table-header-background-color: #d176e1; 
+    --table-header-color: #fff; 
+    --table-border-color: #303030; 
+    --table-hover-background-color: #7d4787; 
+    --table-hover-color: #fff; 
 }
 
 body {
@@ -147,5 +157,24 @@ h2, h3, h4 {
     border-color: var(--input-border-color);
 }
 
+table {
+    border-collapse: collapse;
+    width: 100%; 
+    margin-bottom: 30px; 
+}
 
+.table th {
+    padding: 12px 0; 
+    text-align: left;
+    background: var(--table-headerbackground-color);
+    color: var(--table-header-color);  
+}
 
+.table td, th {
+    border: 1px solid var(--table-border-color)
+}
+
+.table-hover, tr:hover {
+    background: var(--table-hover-background-color);
+    color: var(--table-hover-color);
+}
