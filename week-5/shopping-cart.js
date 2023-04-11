@@ -1,3 +1,11 @@
+/*
+    ==================
+    Title: shopping-cart.js, 
+    Author: Trevor McLaurine
+    Date: 4/11/2023
+    Description: Creates the functions needed for the shopping cart
+*/
+
 export class ShoppingCart {
     constructor() {
         this.products = []
