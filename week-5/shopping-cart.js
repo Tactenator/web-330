@@ -11,11 +11,14 @@ export class ShoppingCart {
         this.products.push(e)
     }
 
-    showItems() {
-        let items; 
-        for(const item of this.products) {
-            items += item
+    items(id, name, price) { 
+        let newItem = [id, name, price]
+        let newRow = document.createElement('tr');
+        for(const item of newItem) {
+            let newData = document.createElement('td');
+            newData.innerHTML= item; 
+            newRow.appendChild(newData)
         }
-        return items; 
+        return newRow; 
     }
 }
