@@ -80,7 +80,7 @@
         const product = productList.options[productList.selectedIndex].text; 
         const productValue = productList.options[productList.selectedIndex].value; 
 
-        if(product !== '--Select--'){
+        if(productValue !== 'select'){
             cart.add(new Product(product, productValue))
             // call setCartCount
             alert(`${product} was added to your shopping cart!`)
