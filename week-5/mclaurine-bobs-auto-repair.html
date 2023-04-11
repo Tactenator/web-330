@@ -11,7 +11,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./mclaurine-calorie.css">
+    <link rel="stylesheet" href="./mclaurine-bobs-auto-repair.css">
     <link rel="stylesheet" href="../site.css">
     <link rel="stylesheet" href="../theme.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap">
@@ -25,9 +25,9 @@
             <div class="card-content">
                 <div class="form">
                     <div class="form-field">
-                        <label for="txtFoodItem">Chosoe a product:</label>
-                        <select id="txtFoodItem">
-                            <option value="Select">--Select--</option>
+                        <label for="productList">Choose a product:</label>
+                        <select id="productList">
+                            <option value="select">--Select--</option>
                             <option value="19.99">Oil Change</option>
                             <option value="18.44">Filter Replacement</option>
                             <option value="9.99">Wiper Fluid Refill</option>
@@ -64,6 +64,22 @@
     const cart = new ShoppingCart(); 
     const product = new Product(); 
 
-    setCartCount(); 
+    const addProductBtn = document.getElementById('btnAddProduct')
+
+    addProductBtn.addEventListener('click', () => {
+        const productList = document.getElementById('productList')
+        const product = productList.options[productList.selectedIndex].text; 
+        const productValue = productList.options[productList.selectedIndex].value; 
+
+        if(product !== '--Select--'){
+            cart.add(new Product(product, productValue))
+            // call setCartCount
+            alert(`${product} was added to your shopping cart!`)
+            productList.options[productList.selectedIndex].value = "select";
+        }
+    })
+
+
+    
 </script>
 </html>
