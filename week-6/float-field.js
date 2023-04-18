@@ -5,10 +5,14 @@ export class FloatField {
     }
 
     validate() {
-        return this.field.isNaN(); 
+        if(isNaN(this.field))
+        {
+            return false; 
+        }
+        return true; 
     }
 
     getMessage() {
-        return "<name> must be a float field. You entered <field>";
+        return  `${this.name} must be a float value. You entered ${this.field}`;
     }
 }

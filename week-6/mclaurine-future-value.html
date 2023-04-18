@@ -11,10 +11,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./mclaurine-bobs-auto-repair.css">
+    <link rel="stylesheet" href="./mclaurine-future-value.css">
+    <link rel="stylesheet" href="../flex-layout.css";
     <link rel="stylesheet" href="../site.css">
     <link rel="stylesheet" href="../theme.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />    <script src="./cart-component.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap">
     <title>WEB 330 - Enterprise JavaScript II</title>
 </head>
@@ -78,7 +78,72 @@
     import { FinanceCalculator } from './finance-calculator.js';
     import { Validator } from './validator.js';
 
+    const calculateBtn = document.getElementById('btnCalculate');
+    const monthlyPayment = document.getElementById('txtMonthlyPayment').value;
+    const rate = document.getElementById('txtYearlyRate').value;
+    const years = document.getElementById('listNumOfYears').value;
+    const errorLogEl = document.getElementById('errorLog')
     
+    const getTodaysDate = () => {
+        let today = new Date(); 
+
+        let day = today.getDate()
+        let month = today.getMonth() + 1; 
+        let year = today.getFullYear()
+
+        //checks to see if month is less than 10 to see if a 0 is needed in front of the month number.
+        month = month < 10 ? '0' + month : month;
+
+        return(month + '/' + day + '/' + year)
+    }
+
+    document.getElementById('today').innerHTML = getTodaysDate()
+
+    calculateBtn.addEventListener('click', () => {
+        let monthlyPaymentValidator = new Validator("Monthly Payment", monthlyPayment)
+        let rateValidator = new Validator('Interest Rate', rate)
+        const errorMessageUl = document.createElement('ul');
+        const errorLog = []
+
+        monthlyPaymentValidator.addRequiredField(monthlyPaymentValidator.name, monthlyPaymentValidator.field)
+        monthlyPaymentValidator.addRequiredFloatField(monthlyPaymentValidator.name, monthlyPaymentValidator.field)
+        monthlyPaymentValidator.addFloatMinField(monthlyPaymentValidator.name, monthlyPaymentValidator.field, 100)
+
+        rateValidator.addRequiredField(rateValidator.name, rateValidator.field)
+        rateValidator.addRequiredFloatField(rateValidator.name, rateValidator.field)
+        rateValidator.addFloatMaxField(rateValidator.name, rateValidator.field, 100)
+
+        if(!monthlyPaymentValidator.validate()) {
+            for(let msg of monthlyPaymentValidator.messages) {
+                errorLog.push(msg)
+            }
+                for(let err of errorLog) {
+                    let errorLi = document.createElement('li')
+                    errorLi.innerHTML = err;
+                    errorMessageUl.appendChild(errorLi)
+                }
+                errorLogEl.appendChild(errorMessageUl)
+        }
+        else {
+            let futureValue = FinanceCalculator.calculateFutureValue(monthlyPayment, rate, years);
+            document.getElementById('futureValue').innerHTML = futureValue; 
+        }
+
+        if(!rateValidator.validate()) {
+            for(let msg of monthlyPaymentValidator.messages) {
+                errorLog.push(msg)
+            }
+            for(let err of errorLog) {
+                let errorLi = document.createElement('li')
+                errorLi.innerHTML = err;
+                errorMessageUl.appendChild(errorLi)
+            }
+            errorLogEl.appendChild(errorMessageUl)
+        }
+        else {
+            
+        }
+    })
 
     
 </script>

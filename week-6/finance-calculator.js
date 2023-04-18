@@ -2,7 +2,7 @@ export class FinanceCalculator {
     static MONTHS_IN_YEAR = 12; 
 
     static calculateFutureValue(monthlyPayment, rate, years) {
-        let months = years * MONTHS_IN_YEAR; 
+        let months = years * FinanceCalculator.MONTHS_IN_YEAR; 
         let interestRate = 1 + rate/100; 
         let presentValue = monthlyPayment * months;
         let futureValue = presentValue * (Math.pow(interestRate, months))

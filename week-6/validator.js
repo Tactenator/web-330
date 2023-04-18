@@ -1,15 +1,19 @@
-import { RequiredField } from "./required-field";
-import { FloatField } from "./float-max-field";
-import { FloatMinField } from "./float-min-field";
-import { FloatMaxField } from "./float-max-field";
+import { RequiredField } from "./required-field.js";
+import { FloatField } from "./float-field.js";
+import { FloatMinField } from "./float-min-field.js";
+import { FloatMaxField } from "./float-max-field.js";
 
-class Validator {
-    validators = [];
-    messages = []
-    constructor(name, field) {}
+export class Validator {
+    constructor(name, field) {
+        this.name = name; 
+        this.field = field
+        this.validators = [];
+        this.messages = []
+    }
 
     addRequiredField() {
         this.validators.push(new RequiredField(this.name, this.field))
+        console.log(this.validators)
     }
 
     addRequiredFloatField() {
@@ -27,10 +31,9 @@ class Validator {
     validate() {
         for(let item of this.validators) {
             if(!item.validate()) {
-                item.getMessage()
-                return false;
+                this.messages.push(item.getMessage()) 
+                return false; 
             }
-            return true; 
         }
     }
 }

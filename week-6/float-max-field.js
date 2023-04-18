@@ -2,11 +2,11 @@ export class FloatMaxField {
     constructor(name, field, max) {
         this.name = name; 
         this.field = field; 
-        this.max = max; 
+        this.max = 100; 
     }
 
     validate() {
-        return this.field.parseFloat() < this.max; 
+        return parseFloat(this.field) < this.max; 
     }
 
     getMessage() {
