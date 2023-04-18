@@ -61,45 +61,7 @@
     </div>
 </body>
 <script type="module">
-    import { Product } from './product.js';
-    import { ShoppingCart } from './shopping-cart.js' 
-
-    const cart = new ShoppingCart(); 
-    const product = new Product(); 
-
-    const addProductBtn = document.getElementById('btnAddProduct')
-
-    function setCartCount() {
-        const cartCount = document.getElementById('cart-count');
-
-        cartCount.innerHTML = cart.count();
-    }
-
-    addProductBtn.addEventListener('click', () => {
-        const productList = document.getElementById('productList')
-        const product = productList.options[productList.selectedIndex].text; 
-        const productValue = productList.options[productList.selectedIndex].value; 
-
-        if(productValue !== 'select'){
-            cart.add(new Product(product, productValue))
-            // call setCartCount
-            alert(`${product} was added to your shopping cart!`)
-            productList.options[productList.selectedIndex].value = "select";
-        }
-
-        setCartCount(); 
-    })
-
-    document.getElementById('cartIcon').addEventListener('click', () => {
-        let cartDisplayTable = document.getElementById('shoppingCart') 
-
-        for(let item of cart.products){
-            let newRow = cart.items(item.id, item.name, item.price)
-            cartDisplayTable.appendChild(newRow)
-        }
-    })
-
-    setCartCount();
+    
     
 </script>
 </html>
