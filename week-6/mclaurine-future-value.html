@@ -1,0 +1,105 @@
+<!--
+    Title: mclaurine-bobs-auto-repair.html, 
+    Author: Trevor McLaurine
+    Date: 4/11/2023
+    Description: The HTML for Bob's Auto Repair Shop
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./mclaurine-bobs-auto-repair.css">
+    <link rel="stylesheet" href="../site.css">
+    <link rel="stylesheet" href="../theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />    <script src="./cart-component.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap">
+    <title>WEB 330 - Enterprise JavaScript II</title>
+</head>
+<body class="light-theme">
+    <div id="container">
+        <h1 class="app-header">Welcome to Bob's Automotive Repair Shop!</h1>
+        <div class="card">
+            <div class="card-title">Product Listing</div>
+            <cart-component style="width: 100%; display: flex; justify-content: center; align-items: center;
+            font-size: 2rem; color: #4F3674;"></cart-component>
+            <div class="card-content">
+                <div class="form">
+                    <div class="form-field">
+                        <label for="productList">Choose a product:</label>
+                        <select id="productList">
+                            <option value="select">--Select--</option>
+                            <option value="19.99">Oil Change</option>
+                            <option value="18.44">Filter Replacement</option>
+                            <option value="9.99">Wiper Fluid Refill</option>
+                        </select>
+                    </div>
+                    <i id="cart-message">To view your shopping cart click on the cart icon</i>
+                    <div class="form-field">
+                        <button class ="btn btn-primary" id="btnAddProduct">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-title">Shopping Cart</div>
+            <div class="card-content">
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                    </tr>
+                    <tbody id="shoppingCart">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <a class="return-home" href="../index.html">Return</a>
+    </div>
+</body>
+<script type="module">
+    import { Product } from './product.js';
+    import { ShoppingCart } from './shopping-cart.js' 
+
+    const cart = new ShoppingCart(); 
+    const product = new Product(); 
+
+    const addProductBtn = document.getElementById('btnAddProduct')
+
+    function setCartCount() {
+        const cartCount = document.getElementById('cart-count');
+
+        cartCount.innerHTML = cart.count();
+    }
+
+    addProductBtn.addEventListener('click', () => {
+        const productList = document.getElementById('productList')
+        const product = productList.options[productList.selectedIndex].text; 
+        const productValue = productList.options[productList.selectedIndex].value; 
+
+        if(productValue !== 'select'){
+            cart.add(new Product(product, productValue))
+            // call setCartCount
+            alert(`${product} was added to your shopping cart!`)
+            productList.options[productList.selectedIndex].value = "select";
+        }
+
+        setCartCount(); 
+    })
+
+    document.getElementById('cartIcon').addEventListener('click', () => {
+        let cartDisplayTable = document.getElementById('shoppingCart') 
+
+        for(let item of cart.products){
+            let newRow = cart.items(item.id, item.name, item.price)
+            cartDisplayTable.appendChild(newRow)
+        }
+    })
+
+    setCartCount();
+    
+</script>
+</html>
