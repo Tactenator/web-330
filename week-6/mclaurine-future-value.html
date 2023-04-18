@@ -20,48 +20,66 @@
 </head>
 <body class="light-theme">
     <div id="container">
-        <h1 class="app-header">Welcome to Bob's Automotive Repair Shop!</h1>
+        <h1 class="app-header">Welcome to the Future Value App!</h1>
         <div class="card">
-            <div class="card-title">Product Listing</div>
-            <cart-component style="width: 100%; display: flex; justify-content: center; align-items: center;
-            font-size: 2rem; color: #4F3674;"></cart-component>
+            <div class="card-title">Future Value Calculator</div>
+            <div class="row">
+                <div class="col-12 danger" id="errorLog"></div>
+            </div>
             <div class="card-content">
                 <div class="form">
                     <div class="form-field">
-                        <label for="productList">Choose a product:</label>
-                        <select id="productList">
-                            <option value="select">--Select--</option>
-                            <option value="19.99">Oil Change</option>
-                            <option value="18.44">Filter Replacement</option>
-                            <option value="9.99">Wiper Fluid Refill</option>
-                        </select>
+                        <div class="col-5">
+                            <label for="monthlyPayment">Monthly Payment:</label>
+                        </div>
+                        <div class="col-7">
+                            <input type="text" id="txtMonthlyPayment"></input>
+                        </div>
+                        <div class="col-5">
+                            <label for="interestRate">Interest Rate:</label>
+                        </div>
+                        <div class="col-7">
+                            <input type="text" id="txtYearlyRate"></input>
+                        </div>
+                        <i class="danger">Enter 11.1% as 11.1</i>
+                        <div class="col-5">
+                            <label for="">Number of Years:</label>
+                        </div>
+                        <div class="col-7">
+                            <select id="listNumOfYears" class="drop-down-menu">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="19">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
                     </div>
-                    <i id="cart-message">To view your shopping cart click on the cart icon</i>
                     <div class="form-field">
-                        <button class ="btn btn-primary" id="btnAddProduct">Add to Cart</button>
+                        <button class ="btn btn-primary" id="btnCalculate">Calculate</button>
                     </div>
                 </div>
             </div>
         </div>
         <div class="card">
-            <div class="card-title">Shopping Cart</div>
-            <div class="card-content">
-                <table>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                    </tr>
-                    <tbody id="shoppingCart">
-                    </tbody>
-                </table>
+            <div class="card-title">Calculation as of <span id="today"></span></div>
+            <div class="card-content" id="futureValue">
             </div>
         </div>
         <a class="return-home" href="../index.html">Return</a>
     </div>
 </body>
 <script type="module">
-    d
+    import { FinanceCalculator } from './finance-calculator.js';
+    import { Validator } from './validator.js';
+
+    
+
     
 </script>
 </html>
