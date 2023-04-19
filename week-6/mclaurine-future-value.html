@@ -100,36 +100,18 @@
     document.getElementById('today').innerHTML = getTodaysDate()
 
     calculateBtn.addEventListener('click', () => {
-        let monthlyPaymentValidator = new Validator("Monthly Payment", monthlyPayment)
+        let monthlyPaymentValidator = new Validator("Monthly Payment", monthlyPayment, 100)
         let rateValidator = new Validator('Interest Rate', rate)
         const errorMessageUl = document.createElement('ul');
         const errorLog = []
 
         monthlyPaymentValidator.addRequiredField(monthlyPaymentValidator.name, monthlyPaymentValidator.field)
-        monthlyPaymentValidator.addRequiredFloatField(monthlyPaymentValidator.name, monthlyPaymentValidator.field)
-        monthlyPaymentValidator.addFloatMinField(monthlyPaymentValidator.name, monthlyPaymentValidator.field, 100)
+        monthlyPaymentValidator.addFloatMinField(monthlyPaymentValidator.name, monthlyPaymentValidator.field, monthlyPaymentValidator.min)
 
         rateValidator.addRequiredField(rateValidator.name, rateValidator.field)
         rateValidator.addRequiredFloatField(rateValidator.name, rateValidator.field)
-        rateValidator.addFloatMaxField(rateValidator.name, rateValidator.field, 100)
 
         if(!monthlyPaymentValidator.validate()) {
-            for(let msg of monthlyPaymentValidator.messages) {
-                errorLog.push(msg)
-            }
-                for(let err of errorLog) {
-                    let errorLi = document.createElement('li')
-                    errorLi.innerHTML = err;
-                    errorMessageUl.appendChild(errorLi)
-                }
-                errorLogEl.appendChild(errorMessageUl)
-        }
-        else {
-            let futureValue = FinanceCalculator.calculateFutureValue(monthlyPayment, rate, years);
-            document.getElementById('futureValue').innerHTML = futureValue; 
-        }
-
-        if(!rateValidator.validate()) {
             for(let msg of monthlyPaymentValidator.messages) {
                 errorLog.push(msg)
             }
@@ -140,9 +122,24 @@
             }
             errorLogEl.appendChild(errorMessageUl)
         }
-        else {
-            
+
+        if(!rateValidator.validate()) {
+            for(let msg of rateValidator.messages) {
+                errorLog.push(msg)
+            }
+            for(let err of errorLog) {
+                let errorLi = document.createElement('li')
+                errorLi.innerHTML = err;
+                errorMessageUl.appendChild(errorLi)
+            }
+            errorLogEl.appendChild(errorMessageUl)
         }
+        else {
+
+            let futureValue = FinanceCalculator.calculateFutureValue(monthlyPayment, rate, years);
+            document.getElementById('futureValue').innerHTML = futureValue; 
+        }
+
     })
 
     

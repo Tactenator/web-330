@@ -6,10 +6,11 @@ export class FloatMinField {
     }
 
     validate() {
+        console.log(this.min)
         return parseFloat(this.field) > this.min; 
     }
 
     getMessage() {
-        return `${this.name} must be less than ${this.min}. You entered ${this.field}`;
+        return `${this.name} must be greater than ${this.min}. You entered ${this.field}`;
     }
 }

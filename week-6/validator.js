@@ -4,28 +4,28 @@ import { FloatMinField } from "./float-min-field.js";
 import { FloatMaxField } from "./float-max-field.js";
 
 export class Validator {
-    constructor(name, field) {
+    constructor(name, field, min) {
         this.name = name; 
         this.field = field
+        this.min = min; 
         this.validators = [];
         this.messages = []
     }
 
     addRequiredField() {
-        this.validators.push(new RequiredField(this.name, this.field))
-        console.log(this.validators)
+        this.validators.push(new RequiredField(this.name, Number(this.field)))
     }
 
     addRequiredFloatField() {
-        this.validators.push(new FloatField(this.name, this.field))
+        this.validators.push(new FloatField(this.name, Number(this.field)))
     }
 
-    addFloatMinField(min) {
-        this.validators.push(new FloatMinField(this.name, this.field, min))
+    addFloatMinField() {
+        this.validators.push(new FloatMinField(this.name, Number(this.field)), this.min)
     }
 
-    addFloatMaxField(max) {
-        this.validators.push(new FloatMaxField(this.name, this.field, max))
+    addFloatMaxField() {
+        this.validators.push(new FloatMaxField(this.name, Number(this.field)), this.min)
     }
 
     validate() {
@@ -35,5 +35,6 @@ export class Validator {
                 return false; 
             }
         }
+        return true; 
     }
 }

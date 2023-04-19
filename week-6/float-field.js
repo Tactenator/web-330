@@ -5,11 +5,11 @@ export class FloatField {
     }
 
     validate() {
-        if(isNaN(this.field))
-        {
-            return false; 
+        let newFloat = parseFloat(this.field)
+        if(isNaN(newFloat)){
+            return false
         }
-        return true; 
+        return true;
     }
 
     getMessage() {
