@@ -154,6 +154,7 @@ h2, h3, h4 {
 }
 
 .drop-down-menu {
+    padding: 0.5rem; 
     border-color: var(--input-border-color);
 }
 

@@ -1,8 +1,8 @@
 <!--
-    Title: mclaurine-bobs-auto-repair.html, 
+    Title: mclaurine-future-value.html, 
     Author: Trevor McLaurine
-    Date: 4/11/2023
-    Description: The HTML for Bob's Auto Repair Shop
+    Date: 4/20/2023
+    Description: The HTML for The Future Value App
 -->
 
 <!DOCTYPE html>
@@ -12,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./mclaurine-future-value.css">
-    <link rel="stylesheet" href="../flex-layout.css";
+    <link rel="stylesheet" href="../flex-layout.css">
     <link rel="stylesheet" href="../site.css">
     <link rel="stylesheet" href="../theme.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap">
@@ -23,9 +23,7 @@
         <h1 class="app-header">Welcome to the Future Value App!</h1>
         <div class="card">
             <div class="card-title">Future Value Calculator</div>
-            <div class="row">
-                <div class="col-12 danger" id="errorLog"></div>
-            </div>
+            <div class="col-12 danger" id="errorLog"></div> 
             <div class="card-content">
                 <div class="form">
                     <div class="form-field">
@@ -33,35 +31,33 @@
                             <div class="col-5">
                                 <label for="monthlyPayment" class="form-label">Monthly Payment:</label>
                             </div>
-                            <div class="col-7">
-                                <input type="text" id="txtMonthlyPayment"></input>
-                            </div>
+                            <input type="text" id="txtMonthlyPayment" class="col-7"></input>
                         </div>
                         <div class="row">
                             <div class="col-5">
                                 <label for="interestRate" class="form-label">Interest Rate:</label>
                             </div>
-                            <div class="col-7">
-                                <input type="text" id="txtYearlyRate"></input>
+                            <input type="text" id="txtYearlyRate" class="col-7"></input>
+                            <i class="danger">Enter 11.1% as 11.1</i>
+                        </div>
+                        <div class="row">
+                            <div class="col-5">
+                                <label for="listNumOfYears" class="form-label">Number of Years:</label>
                             </div>
-                        </div>
-                        <i class="danger">Enter 11.1% as 11.1</i>
-                        <div class="col-5">
-                            <label for="">Number of Years:</label>
-                        </div>
-                        <div class="col-7">
-                            <select id="listNumOfYears" class="drop-down-menu">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="19">9</option>
-                                <option value="10">10</option>
-                            </select>
+                            <div class="col-7">
+                                <select id="listNumOfYears" class="drop-down-menu">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="19">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="form-field">
@@ -82,12 +78,14 @@
     import { FinanceCalculator } from './finance-calculator.js';
     import { Validator } from './validator.js';
 
+    //creates variables that bind document items to variables.
     const calculateBtn = document.getElementById('btnCalculate');
     const monthlyPayment = document.getElementById('txtMonthlyPayment').value;
     const rate = document.getElementById('txtYearlyRate').value;
     const years = document.getElementById('listNumOfYears').value;
     const errorLogEl = document.getElementById('errorLog')
     
+    //function that fetches today's date
     const getTodaysDate = () => {
         let today = new Date(); 
 
@@ -101,14 +99,18 @@
         return(month + '/' + day + '/' + year)
     }
 
+    //sets the 'today' id to the today's date function
     document.getElementById('today').innerHTML = getTodaysDate()
 
+    //creates an event listener for the button click
     calculateBtn.addEventListener('click', () => {
+        //creates new instances of the classes as well as the error log array
         let monthlyPaymentValidator = new Validator("Monthly Payment", monthlyPayment)
         let rateValidator = new Validator('Interest Rate', rate)
         const errorMessageUl = document.createElement('ul');
         const errorLog = []
 
+        //adds the necessary items to be validated. 
         monthlyPaymentValidator.addRequiredField(monthlyPaymentValidator.name, monthlyPaymentValidator.field)
         monthlyPaymentValidator.addFloatMinField(monthlyPaymentValidator.name, monthlyPaymentValidator.field)
 
@@ -116,6 +118,7 @@
         rateValidator.addRequiredFloatField(rateValidator.name, rateValidator.field)
         rateValidator.addFloatMaxField(rateValidator.name, rateValidator.field)
 
+        //checks to see if validation works. If not, will send and display error messages. 
         if(!monthlyPaymentValidator.validate())  {
             for(let msg of monthlyPaymentValidator.messages) {
                 errorLog.push(msg)
@@ -139,6 +142,7 @@
             errorLogEl.appendChild(errorMessageUl)
         }
         else {
+            //if everything works, the future value will be shown. 
             let futureValue = FinanceCalculator.calculateFutureValue(monthlyPayment, rate, years);
             document.getElementById('futureValue').innerHTML = 'The future value is ' + futureValue; 
         }
