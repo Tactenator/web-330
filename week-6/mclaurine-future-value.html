@@ -29,17 +29,21 @@
             <div class="card-content">
                 <div class="form">
                     <div class="form-field">
-                        <div class="col-5">
-                            <label for="monthlyPayment">Monthly Payment:</label>
+                        <div class="row">
+                            <div class="col-5">
+                                <label for="monthlyPayment" class="form-label">Monthly Payment:</label>
+                            </div>
+                            <div class="col-7">
+                                <input type="text" id="txtMonthlyPayment"></input>
+                            </div>
                         </div>
-                        <div class="col-7">
-                            <input type="text" id="txtMonthlyPayment"></input>
-                        </div>
-                        <div class="col-5">
-                            <label for="interestRate">Interest Rate:</label>
-                        </div>
-                        <div class="col-7">
-                            <input type="text" id="txtYearlyRate"></input>
+                        <div class="row">
+                            <div class="col-5">
+                                <label for="interestRate" class="form-label">Interest Rate:</label>
+                            </div>
+                            <div class="col-7">
+                                <input type="text" id="txtYearlyRate"></input>
+                            </div>
                         </div>
                         <i class="danger">Enter 11.1% as 11.1</i>
                         <div class="col-5">
@@ -100,18 +104,19 @@
     document.getElementById('today').innerHTML = getTodaysDate()
 
     calculateBtn.addEventListener('click', () => {
-        let monthlyPaymentValidator = new Validator("Monthly Payment", monthlyPayment, 100)
+        let monthlyPaymentValidator = new Validator("Monthly Payment", monthlyPayment)
         let rateValidator = new Validator('Interest Rate', rate)
         const errorMessageUl = document.createElement('ul');
         const errorLog = []
 
         monthlyPaymentValidator.addRequiredField(monthlyPaymentValidator.name, monthlyPaymentValidator.field)
-        monthlyPaymentValidator.addFloatMinField(monthlyPaymentValidator.name, monthlyPaymentValidator.field, monthlyPaymentValidator.min)
+        monthlyPaymentValidator.addFloatMinField(monthlyPaymentValidator.name, monthlyPaymentValidator.field)
 
         rateValidator.addRequiredField(rateValidator.name, rateValidator.field)
         rateValidator.addRequiredFloatField(rateValidator.name, rateValidator.field)
+        rateValidator.addFloatMaxField(rateValidator.name, rateValidator.field)
 
-        if(!monthlyPaymentValidator.validate()) {
+        if(!monthlyPaymentValidator.validate())  {
             for(let msg of monthlyPaymentValidator.messages) {
                 errorLog.push(msg)
             }
@@ -122,8 +127,7 @@
             }
             errorLogEl.appendChild(errorMessageUl)
         }
-
-        if(!rateValidator.validate()) {
+        else if(!rateValidator.validate()) {
             for(let msg of rateValidator.messages) {
                 errorLog.push(msg)
             }
@@ -135,9 +139,8 @@
             errorLogEl.appendChild(errorMessageUl)
         }
         else {
-
             let futureValue = FinanceCalculator.calculateFutureValue(monthlyPayment, rate, years);
-            document.getElementById('futureValue').innerHTML = futureValue; 
+            document.getElementById('futureValue').innerHTML = 'The future value is ' + futureValue; 
         }
 
     })

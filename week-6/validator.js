@@ -21,15 +21,16 @@ export class Validator {
     }
 
     addFloatMinField() {
-        this.validators.push(new FloatMinField(this.name, Number(this.field)), this.min)
+        this.validators.push(new FloatMinField(this.name, Number(this.field)))
     }
 
     addFloatMaxField() {
-        this.validators.push(new FloatMaxField(this.name, Number(this.field)), this.min)
+        this.validators.push(new FloatMaxField(this.name, Number(this.field)))
     }
 
     validate() {
         for(let item of this.validators) {
+            
             if(!item.validate()) {
                 this.messages.push(item.getMessage()) 
                 return false; 

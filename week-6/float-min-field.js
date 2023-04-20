@@ -1,12 +1,11 @@
 export class FloatMinField {
-    constructor(name, field, min) {
+    constructor(name, field) {
         this.name = name; 
         this.field = field; 
         this.min = 100; 
     }
 
     validate() {
-        console.log(this.min)
         return parseFloat(this.field) > this.min; 
     }
 

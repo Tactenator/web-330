@@ -9,3 +9,12 @@
     display: inline-block; 
     padding-top: 1rem;  
 }
+
+#futureValue {
+    font-size: 2rem; 
+    text-align: center;
+}
+
+.row {
+    align-items: center;
+}
