@@ -6,7 +6,7 @@ export class FloatMaxField {
     }
 
     validate() {
-        return parseFloat(this.field) < this.max; 
+        return parseFloat(this.field) <= this.max; 
     }
 
     getMessage() {

@@ -80,16 +80,36 @@
 
     //creates variables that bind document items to variables.
     const calculateBtn = document.getElementById('btnCalculate');
-    const monthlyPayment = document.getElementById('txtMonthlyPayment').value;
-    const rate = document.getElementById('txtYearlyRate').value;
+    let monthlyPayment = document.getElementById('txtMonthlyPayment').value;
+    let rate = document.getElementById('txtYearlyRate').value;
     const years = document.getElementById('listNumOfYears').value;
     const errorLogEl = document.getElementById('errorLog')
 
+    //will remove all error child nodes from the errorlog div upon rerunning the program.
     function removeChildren(parent) {
-            while(parent.firstChild) {
-                parent.removeChild(parent.firstChild);
-            }
+        while(parent.firstChild) {
+            parent.removeChild(parent.firstChild);
         }
+    }
+    
+    //updates the payment value to user input. This will now update each time the input is changed. 
+    function updatePayment(e) {
+        monthlyPayment = e.target.value; 
+    }
+
+    //updates the interest value to user input. This will now update each time the input is changed.
+    function updateInterest(e) {
+        rate = e.target.value; 
+    }
+
+    document.getElementById('txtMonthlyPayment').addEventListener('input', (e) => {
+        updatePayment(e)
+    })
+    
+        
+    document.getElementById('txtYearlyRate').addEventListener('input', (e) => {
+        updateInterest(e)
+    })
     
     //function that fetches today's date
     const getTodaysDate = () => {

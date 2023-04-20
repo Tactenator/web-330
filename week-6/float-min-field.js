@@ -6,7 +6,7 @@ export class FloatMinField {
     }
 
     validate() {
-        return parseFloat(this.field) > this.min; 
+        return parseFloat(this.field) >= this.min; 
     }
 
     getMessage() {
