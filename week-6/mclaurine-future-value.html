@@ -84,6 +84,12 @@
     const rate = document.getElementById('txtYearlyRate').value;
     const years = document.getElementById('listNumOfYears').value;
     const errorLogEl = document.getElementById('errorLog')
+
+    function removeChildren(parent) {
+            while(parent.firstChild) {
+                parent.removeChild(parent.firstChild);
+            }
+        }
     
     //function that fetches today's date
     const getTodaysDate = () => {
@@ -117,6 +123,10 @@
         rateValidator.addRequiredField(rateValidator.name, rateValidator.field)
         rateValidator.addRequiredFloatField(rateValidator.name, rateValidator.field)
         rateValidator.addFloatMaxField(rateValidator.name, rateValidator.field)
+
+        if(errorLogEl.firstChild){
+            removeChildren(errorLogEl)
+        }
 
         //checks to see if validation works. If not, will send and display error messages. 
         if(!monthlyPaymentValidator.validate())  {
