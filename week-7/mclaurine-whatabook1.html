@@ -42,8 +42,8 @@
         let tableData = document.createElement('table')
         tableData.classList.add('table')
         tableData.setAttribute('id', 'bookTable');
-        for(book of books){
-
+        for(let book of books){
+            console.log(book.getElementsByTagName('isbn')[0])
         }
         console.log(books)
     }
