@@ -1,0 +1,63 @@
+<!--
+    Title: mclaurine-bobs-auto-repair.html, 
+    Author: Trevor McLaurine
+    Date: 4/11/2023
+    Description: The HTML for Bob's Auto Repair Shop
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../flex-layout.css">
+    <link rel="stylesheet" href="../site.css">
+    <link rel="stylesheet" href="../theme.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap">
+    <title>WEB 330 - Enterprise JavaScript II</title>
+</head>
+<body class="light-theme">
+    <div id="container">
+        <h1 class="app-header">Welcome to the WhatABook, Part 1 App!</h1>
+        <div class="card">
+            <div class="card-title">Book Listing</div>
+            <div class="card-content" id="bookList">
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-title">Selected Book</div>
+            <div class="card-content" id="selectedBook">
+            </div>
+        </div>
+        <a class="return-home" href="../index.html">Return</a>
+    </div>
+</body>
+<script type="module">
+   document.addEventListener("DOMContentLoaded", () => {
+    let fileName = 'books.xml'; 
+
+    function loadBooks(xml) {
+        const books = xml.getElementsByTagName("book"); 
+        let tableData = document.createElement('table')
+        tableData.classList.add('table')
+        tableData.setAttribute('id', 'bookTable');
+        for(book of books){
+
+        }
+        console.log(books)
+    }
+
+    fetch(fileName)
+    .then(res => res.text())
+    .then(data => {
+        const domParser = new DOMParser(); 
+        const xmlBooks = domParser.parseFromString(data, "text/xml")
+
+        loadBooks(xmlBooks)
+    })
+  });
+
+    
+</script>
+</html>
