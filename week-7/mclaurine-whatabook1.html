@@ -1,8 +1,8 @@
 <!--
-    Title: mclaurine-bobs-auto-repair.html, 
+    Title: mclaurine-whatabook1.html, 
     Author: Trevor McLaurine
-    Date: 4/11/2023
-    Description: The HTML for Bob's Auto Repair Shop
+    Date: 4/25/2023
+    Description: The HTML for the Whatabook app
 -->
 
 <!DOCTYPE html>
@@ -11,13 +11,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../flex-layout.css">
     <link rel="stylesheet" href="../site.css">
     <link rel="stylesheet" href="../theme.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap">
     <title>WEB 330 - Enterprise JavaScript II</title>
 </head>
-<body class="light-theme">
+<body class="light-theme" style="display: flex; justify-content: center;">
     <div id="container">
         <h1 class="app-header">Welcome to the WhatABook, Part 1 App!</h1>
         <div class="card">
@@ -26,11 +25,11 @@
                 <table id="bookTable" class="table">
                     <tbody>
                         <tr>
-                            <td value="ISBN">ISBN</td>
-                            <td value="title">Title</td>
-                            <td value="description">Description</td>
-                            <td value="pages">Pages</td>
-                            <td value="authors">Authors</td>
+                            <th value="ISBN">ISBN</th>
+                            <th value="title">Title</th>
+                            <th value="description">Description</th>
+                            <th value="pages">Pages</th>
+                            <th value="authors">Authors</th>
                         </tr>
                     </tbody>
                 </table>
@@ -45,30 +44,39 @@
     </div>
 </body>
 <script type="module">
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    // finds and sets the table body in a variable.
     const bookTable = document.querySelector('tbody')
-   document.addEventListener("DOMContentLoaded", () => {
 
+    //loads the xml document
     let fileName = 'books.xml';
 
+    //when clicked, will display the book data in the book selected section.
     function anchorClicked(e) {
         e.preventDefault()
 
+        //used cell because row would only show the 'tbody'. 
         let self = this; 
         let cell = self.parentElement;  
 
+        //extracts all td divs.
         let data = cell.querySelectorAll('td')
 
         let bookData = `<ul style="list-style: none;">`
 
+        //goes through each of the fields in the data variable and builds a string from their values.
         for (let field of data) {
             bookData += `<li><b>${field.dataset.name}:</b> ${field.dataset.value}</li>`
         }
 
         bookData += `</ul>`
 
+        //appends the data to the book selected div
         document.getElementById('selectedBook').innerHTML = bookData; 
     }
 
+    //adds click events to each of the ISBN links
     function addISBNclickEvents() {
         const viewButtons = document.querySelectorAll('.isbn-link')
         for(let item of viewButtons) {
@@ -76,12 +84,17 @@
         }
     }
 
+    //loads the books from the XML document and places them in divs.
     function loadBooks(xml) {
         const books = xml.getElementsByTagName("book"); 
+        //creates new rows and table data that will be used to display the XML document information. 
         for(let book of books){
             let newRow = document.createElement('tr')
             let isbnData = document.createElement('td')
             isbnData.classList.add('isbn-link')
+            isbnData.style.color = '#4F3674';
+            isbnData.style.cursor = 'pointer';
+
             let titleData = document.createElement('td')
             let descriptionData = document.createElement('td')
             let pagesData = document.createElement('td')
@@ -113,13 +126,15 @@
             authorData.dataset.name = 'Authors'
             authorData.dataset.value = newAuthors;
 
+            //after each set of data is created, it is appended to a row which is then appended to the table itself. 
             newRow.append(isbnData, titleData, descriptionData, pagesData, authorData)
             bookTable.appendChild(newRow)
         }
-
+        //calls to add click events after intializing each 'td' div. 
         addISBNclickEvents()
     }
 
+    //fetches the file so that the data can be parsed and delivered to the next part of the program. 
     fetch(fileName)
     .then(res => res.text())
     .then(data => {
