@@ -23,6 +23,17 @@
         <div class="card">
             <div class="card-title">Book Listing</div>
             <div class="card-content" id="bookList">
+                <table id="bookTable" class="table">
+                    <tbody>
+                        <tr>
+                            <td value="ISBN">ISBN</td>
+                            <td value="title">Title</td>
+                            <td value="description">Description</td>
+                            <td value="pages">Pages</td>
+                            <td value="authors">Authors</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
         <div class="card">
@@ -34,18 +45,79 @@
     </div>
 </body>
 <script type="module">
+    const bookTable = document.querySelector('tbody')
    document.addEventListener("DOMContentLoaded", () => {
-    let fileName = 'books.xml'; 
+
+    let fileName = 'books.xml';
+
+    function anchorClicked(e) {
+        e.preventDefault()
+
+        let self = this; 
+        let cell = self.parentElement;  
+
+        let data = cell.querySelectorAll('td')
+
+        let bookData = `<ul style="list-style: none;"></ul>`
+
+        console.log(data)
+
+        for (let field of data) {
+            bookData += `<li><b>${field.dataset.value}</b></li>`
+        }
+
+        document.getElementById('selectedBook').innerHTML = bookData; 
+    }
+
+    function addISBNclickEvents() {
+        const viewButtons = document.querySelectorAll('.isbn-link')
+        for(let item of viewButtons) {
+            item.addEventListener('click', anchorClicked)
+        }
+    }
 
     function loadBooks(xml) {
         const books = xml.getElementsByTagName("book"); 
-        let tableData = document.createElement('table')
-        tableData.classList.add('table')
-        tableData.setAttribute('id', 'bookTable');
         for(let book of books){
-            console.log(book.getElementsByTagName('isbn')[0])
+            let newRow = document.createElement('tr')
+            let isbnData = document.createElement('td')
+            isbnData.classList.add('isbn-link')
+            let titleData = document.createElement('td')
+            let descriptionData = document.createElement('td')
+            let pagesData = document.createElement('td')
+            let authorData = document.createElement('td')
+
+            let newISBN = book.getElementsByTagName('isbn')[0].childNodes[0].nodeValue;
+            let newTitle = book.getElementsByTagName('title')[0].childNodes[0].nodeValue;
+            let newDescription = book.getElementsByTagName('description')[0].childNodes[0].nodeValue;
+            let newPages = book.getElementsByTagName('pages')[0].childNodes[0].nodeValue;
+            let newAuthors = book.getElementsByTagName('authors')[0].childNodes[0].nodeValue;
+
+            isbnData.innerHTML = newISBN;
+            isbnData.dataset.name = 'ISBN'
+            isbnData.dataset.value = newISBN;
+
+            titleData.innerHTML = newTitle; 
+            titleData.dataset.name = 'Title'
+            titleData.dataset.value = newTitle;
+
+            descriptionData.innerHTML = newDescription; 
+            descriptionData.dataset.name = 'Description'
+            descriptionData.dataset.value = newDescription;
+            
+            pagesData.innerHTML = newPages; 
+            pagesData.dataset.name = 'Pages'
+            pagesData.dataset.value = newPages;
+
+            authorData.innerHTML = newAuthors; 
+            authorData.dataset.name = 'Authors'
+            authorData.dataset.value = newAuthors;
+
+            newRow.append(isbnData, titleData, descriptionData, pagesData, authorData)
+            bookTable.appendChild(newRow)
         }
-        console.log(books)
+
+        addISBNclickEvents()
     }
 
     fetch(fileName)
