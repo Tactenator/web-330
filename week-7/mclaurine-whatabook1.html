@@ -58,13 +58,13 @@
 
         let data = cell.querySelectorAll('td')
 
-        let bookData = `<ul style="list-style: none;"></ul>`
-
-        console.log(data)
+        let bookData = `<ul style="list-style: none;">`
 
         for (let field of data) {
-            bookData += `<li><b>${field.dataset.value}</b></li>`
+            bookData += `<li><b>${field.dataset.name}:</b> ${field.dataset.value}</li>`
         }
+
+        bookData += `</ul>`
 
         document.getElementById('selectedBook').innerHTML = bookData; 
     }
