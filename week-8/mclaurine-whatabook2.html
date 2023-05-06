@@ -1,0 +1,159 @@
+<!--
+    Title: mclaurine-whatabook1.html, 
+    Author: Trevor McLaurine
+    Date: 4/25/2023
+    Description: The HTML for the Whatabook app
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../site.css">
+    <link rel="stylesheet" href="../theme.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap">
+    <title>WEB 330 - Enterprise JavaScript II</title>
+</head>
+<body class="light-theme" style="display: flex; justify-content: center;">
+    <div id="container">
+        <h1 class="app-header">Welcome to the WhatABook, Part 2 App!</h1>
+        <div class="card">
+            <div class="card-title">Book Listing</div>
+            <div class="card-content" id="bookList">
+                <table id="bookTable" class="table">
+                    <tbody id="tableBody">
+                        <tr>
+                            <th value="ISBN">ISBN</th>
+                            <th value="title">Title</th>
+                            <th value="description">Description</th>
+                            <th value="pages">Pages</th>
+                            <th value="authors">Authors</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-title">Selected Book</div>
+            <div class="card-content" id="selectedBook">
+            </div>
+        </div>
+        <a class="return-home" href="../index.html">Return</a>
+    </div>
+</body>
+<script type="module">
+    import { HttpClient } from './http-client.js';
+
+    const http = new HttpClient()
+
+    const isbns = [ 
+        '0345339681',
+        '0261103571',
+        '9780593099322',
+        '9780261102361',
+        '9780261102378',
+        '9780590302715',
+        '9780316769532',
+        '9780743273565',
+        '9780590405959'
+    ]
+
+    const params = {
+        "bibkeys": `ISBN:${isbns.join(",")}`,
+        "format": "json",
+        "jscmd": "details"
+    }
+
+    function getBooks(e) {
+        e.preventDefault();
+
+        let self = this; 
+        let cell = self.parentElement;  
+
+        let isbn = self.innerText; 
+        http.get("https://openlibrary.org/api/books", params).then(res => {
+            
+        })
+    }
+
+    function handleTable(book){
+        let newRow = document.createElement('tr')
+        let isbnData = document.createElement('td')
+        isbnData.classList.add('isbn-link')
+        isbnData.style.color = '#4F3674';
+        isbnData.style.cursor = 'pointer';
+
+        let titleData = document.createElement('td')
+        let descriptionData = document.createElement('td')
+        let pagesData = document.createElement('td')
+        let authorData = document.createElement('td')
+
+        let newISBN = book.isbn; 
+        let newTitle = book.title
+        let newDescription = book.description
+        let newPages = book.pages
+        let newAuthors = book.author
+
+        isbnData.innerHTML = newISBN;
+        titleData.innerHTML = newTitle; 
+        descriptionData.innerHTML = newDescription; 
+        pagesData.innerHTML = newPages; 
+        authorData.innerHTML = newAuthors; 
+        
+
+        //after each set of data is created, it is appended to a row which is then appended to the table itself. 
+        newRow.append(isbnData, titleData, descriptionData, pagesData, authorData)
+        bookTable.appendChild(newRow)
+    }
+
+    function handleBookInfo(res) { 
+        for(let key in res) {
+            if(res.hasOwnProperty(key)){
+                let authors = []; 
+
+                if(!res[key].details.authors){
+                    authors.push("N/A")
+                }
+                else {
+                    let newAuthor = res[key].details.authors.map(function(author){
+                        return author.name
+                    })
+                    authors.push(newAuthor)
+                }
+
+                let newBook = {
+                    isbn: res[key].details.isbn_13 | res[key].details.isbn_10,
+                    title: res[key].details.title, 
+                    description: res[key].details.subtitle ? res[key].details.subtitle : "N/A", 
+                    pages: res[key].details.number_of_pages ? res[key].details.number_of_pages : "N/A",
+                    author: authors.join(",")
+                }
+                handleTable(newBook)
+            }
+        }
+        
+    }
+
+    function addISBNClickEvents() {
+        const viewButtons = document.querySelectorAll('.isbn-link')
+        for(let item of viewButtons) {
+            item.addEventListener('click', getBooks)
+        }
+
+      
+    }
+
+    http.get("https://openlibrary.org/api/books", params).then(res => {
+        
+        handleBookInfo(res);
+      
+
+        addISBNClickEvents()
+    })
+    .catch(e => {
+        console.log(e)
+    })
+</script>
+</html>
