@@ -6,7 +6,6 @@ export class HttpClient {
         let searchParams = new URLSearchParams(params)
         newUrl.search = searchParams
 
-        console.log(newUrl.toString())
         const res = await fetch(newUrl.toString() + searchParams.toString(), {
             method: 'GET'
         })

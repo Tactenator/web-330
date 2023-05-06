@@ -66,15 +66,48 @@
         "jscmd": "details"
     }
 
+    function handleSelectedBook(e) {
+        console.log(e)
+        let isbn, title, description, pages, authors;
+        
+        
+        for(let key in e) {
+            isbn =  e[key].details.isbn_13 ? e[key].details.isbn_13[0] : e[key].details.isbn_10[0];
+            title = e[key].details.title;
+            description = e[key].details.subtitle ? e[key].details.subtitle : "N/A";
+            pages = e[key].details.number_of_pages ? e[key].details.number_of_pages : "N/A";
+            authors = e[key].details.authors ? e[key].details.authors[0].name : "N/A";
+        }
+        
+        let bookData = 
+        `<ul style="list-style: none;">
+            <li><b>ISBN:</b>${isbn}</li>
+            <li><b>Title:</b>${title}</li>
+            <li><b>Description:</b>${description}</li>
+            <li><b>Pages:</b>${pages}</li>
+            <li><b>Authors:</b>${authors}</li>
+        </ul>`; 
+        
+        document.getElementById('selectedBook').innerHTML = bookData; 
+    }
+
     function getBooks(e) {
         e.preventDefault();
 
         let self = this; 
         let cell = self.parentElement;  
 
-        let isbn = self.innerText; 
-        http.get("https://openlibrary.org/api/books", params).then(res => {
+        let newISBN = self.innerText; 
+        
+        const newParams = {
+        "bibkeys": `ISBN:${newISBN}`,
+        "format": "json",
+        "jscmd": "details"
+    }
+
+        http.get("https://openlibrary.org/api/books", newParams).then(res => {
             
+            handleSelectedBook(res)
         })
     }
 
@@ -124,7 +157,7 @@
                 }
 
                 let newBook = {
-                    isbn: res[key].details.isbn_13 | res[key].details.isbn_10,
+                    isbn: res[key].details.isbn_13 ? res[key].details.isbn_13 : res[key].details.isbn_10,
                     title: res[key].details.title, 
                     description: res[key].details.subtitle ? res[key].details.subtitle : "N/A", 
                     pages: res[key].details.number_of_pages ? res[key].details.number_of_pages : "N/A",
