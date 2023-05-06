@@ -1,7 +1,7 @@
 <!--
-    Title: mclaurine-whatabook1.html, 
+    Title: mclaurine-whatabook2.html, 
     Author: Trevor McLaurine
-    Date: 4/25/2023
+    Date: 5/6/2023
     Description: The HTML for the Whatabook app
 -->
 
@@ -46,6 +46,7 @@
 <script type="module">
     import { HttpClient } from './http-client.js';
 
+    //Initializes new HTTP client
     const http = new HttpClient()
 
     const isbns = [ 
@@ -60,14 +61,15 @@
         '9780590405959'
     ]
 
+    //Creates search parameters
     const params = {
         "bibkeys": `ISBN:${isbns.join(",")}`,
         "format": "json",
         "jscmd": "details"
     }
 
+    //Once an ISBN is clicked, handles the creation of the selected book area
     function handleSelectedBook(e) {
-        console.log(e)
         let isbn, title, description, pages, authors;
         
         
@@ -91,6 +93,7 @@
         document.getElementById('selectedBook').innerHTML = bookData; 
     }
 
+    //Fetches book info using new parameters based on what the user clicks
     function getBooks(e) {
         e.preventDefault();
 
@@ -99,6 +102,7 @@
 
         let newISBN = self.innerText; 
         
+        //The new params are created which searches for the individual book. 
         const newParams = {
         "bibkeys": `ISBN:${newISBN}`,
         "format": "json",
@@ -111,6 +115,7 @@
         })
     }
 
+    //Creates the book table. I opted for creating document elements as opposed to creating a string. 
     function handleTable(book){
         let newRow = document.createElement('tr')
         let isbnData = document.createElement('td')
@@ -141,6 +146,7 @@
         bookTable.appendChild(newRow)
     }
 
+    //Fetches the info for each book in the params and then calls for the table to be created. 
     function handleBookInfo(res) { 
         for(let key in res) {
             if(res.hasOwnProperty(key)){
@@ -169,15 +175,15 @@
         
     }
 
+    //adds on click events for the ISBN buttons
     function addISBNClickEvents() {
         const viewButtons = document.querySelectorAll('.isbn-link')
         for(let item of viewButtons) {
             item.addEventListener('click', getBooks)
         }
-
-      
     }
 
+    //Begins the initial fetch to retrieve the book information.
     http.get("https://openlibrary.org/api/books", params).then(res => {
         
         handleBookInfo(res);
